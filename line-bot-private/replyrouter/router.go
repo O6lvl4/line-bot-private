@@ -28,7 +28,7 @@ func Routing(text string) *string {
 			for _, otherItem := range otherItems {
 				startLabel = fmt.Sprintf("%02d:%02d", otherItem.StartTime.Hour(), workItem.StartTime.Minute())
 				endLabel = fmt.Sprintf("%02d:%02d", otherItem.EndTime.Hour(), workItem.EndTime.Minute())
-				otherMemberContent := fmt.Sprintf("\n%sさん\n%s〜%sまで", otherItem.Member.Name, startLabel, endLabel)
+				otherMemberContent := fmt.Sprintf("\n%s\n%s〜%sまで", otherItem.Member.Name, startLabel, endLabel)
 				contentMessage += otherMemberContent
 			}
 			contentMessage += "\n以上になります。\n"
