@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  line-bot-private
+  
+  Sample SAM Template for line-bot-private
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 5
+    Tracing: Active
+  Api:
+    TracingEnabled: True
+
+Resources:
+  LineBotPrivate:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: line-bot-private/
+      Handler: line-bot-private
+      Runtime: go1.x
+      Architectures:
+        - x86_64
+      Events:
+        CatchAll:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /hello
+            Method: POST
+      Environment:
+        Variables:
+          LINE_BOT_CHANNEL_SECRET: !Ref LineBotChannelSecret
+          LINE_BOT_CHANNEL_ACCESS_TOKEN: !Ref LineBotChannelAccessToken
+
+Parameters:
+  LineBotChannelSecret:
+    Type: String
+  LineBotChannelAccessToken:
+    Type: String
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  HelloWorldAPI:
+    Description: "API Gateway endpoint URL for Prod environment for First Function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+  LineBotPrivate:
+    Description: "First Lambda Function ARN"
+    Value: !GetAtt LineBotPrivate.Arn
+  LineBotPrivateIamRole:
+    Description: "Implicit IAM Role created for Hello World function"
+    Value: !GetAtt LineBotPrivateRole.Arn

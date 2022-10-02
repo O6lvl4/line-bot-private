@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'line-bot-private
+
+  Sample SAM Template for line-bot-private
+
+  '
+Globals:
+  Function:
+    Timeout: 5
+    Tracing: Active
+  Api:
+    TracingEnabled: true
+Resources:
+  LineBotPrivate:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: LineBotPrivate
+      Handler: line-bot-private
+      Runtime: go1.x
+      Architectures:
+      - x86_64
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: POST
+      Environment:
+        Variables:
+          LINE_BOT_CHANNEL_SECRET:
+            Ref: LineBotChannelSecret
+          LINE_BOT_CHANNEL_ACCESS_TOKEN:
+            Ref: LineBotChannelAccessToken
+    Metadata:
+      SamResourceId: LineBotPrivate
+Parameters:
+  LineBotChannelSecret:
+    Type: String
+  LineBotChannelAccessToken:
+    Type: String
+Outputs:
+  HelloWorldAPI:
+    Description: API Gateway endpoint URL for Prod environment for First Function
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/
+  LineBotPrivate:
+    Description: First Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - LineBotPrivate
+      - Arn
+  LineBotPrivateIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value:
+      Fn::GetAtt:
+      - LineBotPrivateRole
+      - Arn
