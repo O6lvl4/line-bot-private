@@ -40,13 +40,17 @@ func convertLineBotRequest(requestBody string) (*Request, error) {
 	return &request, nil
 }
 
-func (b *Bot) ReplyText(requestBody string, replying func(event *RequestEvent) string) error {
+func (b *Bot) ReplyText(requestBody string, replying func(event *RequestEvent) *string) error {
 	request, err := convertLineBotRequest(requestBody)
 	if err != nil {
 		return err
 	}
 	eventDetail := request.Events[0]
-	response, err := b.client.ReplyMessage(eventDetail.ReplyToken, linebot.NewTextMessage(replying(eventDetail))).Do()
+	replyText := replying(eventDetail)
+	if replyText == nil {
+		return nil
+	}
+	response, err := b.client.ReplyMessage(eventDetail.ReplyToken, linebot.NewTextMessage(*replyText)).Do()
 	if err != nil {
 		return err
 	}
