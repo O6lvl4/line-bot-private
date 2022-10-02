@@ -19,9 +19,22 @@ func Routing(text string) *string {
 			return pointerWith("本日はお休みのようです")
 		}
 		workItem := workDay.Items[0]
-		startLabel := fmt.Sprint(workItem.StartTime.Hour()) + "時" + fmt.Sprint(workItem.StartTime.Minute()) + "分"
-		endLabel := fmt.Sprint(workItem.EndTime.Hour()) + "時" + fmt.Sprint(workItem.EndTime.Minute()) + "分"
-		return pointerWith("本日は" + startLabel + "から" + endLabel + "までシフトが入っているようです")
+		startLabel := fmt.Sprintf("%02d:%02d", workItem.StartTime.Hour(), workItem.StartTime.Minute())
+		endLabel := fmt.Sprintf("%02d:%02d", workItem.EndTime.Hour(), workItem.EndTime.Minute())
+		contentMessage := fmt.Sprintf("本日は%s〜%sまでシフトが入っているようです。", startLabel, endLabel)
+		if len(workDay.Items) >= 2 {
+			otherItems := workDay.Items[1:]
+			contentMessage += "\n\n他のメンバーのシフトはこのようになっております。"
+			for _, otherItem := range otherItems {
+				startLabel = fmt.Sprintf("%02d:%02d", otherItem.StartTime.Hour(), workItem.StartTime.Minute())
+				endLabel = fmt.Sprintf("%02d:%02d", otherItem.EndTime.Hour(), workItem.EndTime.Minute())
+				otherMemberContent := fmt.Sprintf("\n%sさん\n%s〜%sまで", otherItem.Member.Name, startLabel, endLabel)
+				contentMessage += otherMemberContent
+			}
+			contentMessage += "\n以上になります。\n"
+		}
+		contentMessage += "\n本日もがんばっていきましょう"
+		return pointerWith(contentMessage)
 	} else {
 		return nil
 	}

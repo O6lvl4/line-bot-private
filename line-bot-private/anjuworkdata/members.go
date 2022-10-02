@@ -16,6 +16,10 @@ var WorkMemberこぞのさん *anju.WorkMember = &anju.WorkMember{
 	Name: "こぞのさん",
 }
 
+var WorkMemberしまださん *anju.WorkMember = &anju.WorkMember{
+	Name: "しまださん",
+}
+
 var WorkMemberしもち *anju.WorkMember = &anju.WorkMember{
 	Name: "しもち",
 }
@@ -30,4 +34,12 @@ var WorkMemberふくもとさん *anju.WorkMember = &anju.WorkMember{
 
 var WorkMemberかたやまさん *anju.WorkMember = &anju.WorkMember{
 	Name: "かたやまさん",
+}
+
+var WorkMemberきたいちさん *anju.WorkMember = &anju.WorkMember{
+	Name: "きたいちさん",
+}
+
+var WorkMemberなかむらさん *anju.WorkMember = &anju.WorkMember{
+	Name: "なかむらさん",
 }
