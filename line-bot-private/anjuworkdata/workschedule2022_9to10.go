@@ -2,13 +2,14 @@ package anjuworkdata
 
 import (
 	"line-bot-private/anju"
+	"line-bot-private/dateutil"
 )
 
 var WorkSchedule2022_9to10 *anju.WorkSchedule = &anju.WorkSchedule{
-	StartDate: newWorkDate(9, 15),
-	EndDate:   newWorkDate(10, 14),
+	StartDate: dateutil.DateFromYearMonthDay(2022, 10, 15),
+	EndDate:   dateutil.DateFromYearMonthDay(2022, 11, 14),
 	Days: []*anju.WorkDay{
-		newWorkDay(newWorkDate(10, 2), []*workDayItem{
+		newWorkDay(dateutil.DateFromYearMonthDay(2022, 11, 2), []*workDayItem{
 			{
 				member:           WorkMemberあんじゅ,
 				startWorkHour:    14,
@@ -59,7 +60,7 @@ var WorkSchedule2022_9to10 *anju.WorkSchedule = &anju.WorkSchedule{
 				endWorkMinutes:   40,
 			},
 		}),
-		newWorkDay(newWorkDate(10, 5), []*workDayItem{
+		newWorkDay(dateutil.DateFromYearMonthDay(2022, 11, 5), []*workDayItem{
 			{
 				member:           WorkMemberあんじゅ,
 				startWorkHour:    14,
@@ -68,7 +69,7 @@ var WorkSchedule2022_9to10 *anju.WorkSchedule = &anju.WorkSchedule{
 				endWorkMinutes:   00,
 			},
 		}),
-		newWorkDay(newWorkDate(10, 7), []*workDayItem{
+		newWorkDay(dateutil.DateFromYearMonthDay(2022, 11, 7), []*workDayItem{
 			{
 				member:           WorkMemberあんじゅ,
 				startWorkHour:    8,
@@ -77,7 +78,7 @@ var WorkSchedule2022_9to10 *anju.WorkSchedule = &anju.WorkSchedule{
 				endWorkMinutes:   00,
 			},
 		}),
-		newWorkDay(newWorkDate(10, 8), []*workDayItem{
+		newWorkDay(dateutil.DateFromYearMonthDay(2022, 11, 8), []*workDayItem{
 			{
 				member:           WorkMemberあんじゅ,
 				startWorkHour:    9,
@@ -86,7 +87,7 @@ var WorkSchedule2022_9to10 *anju.WorkSchedule = &anju.WorkSchedule{
 				endWorkMinutes:   40,
 			},
 		}),
-		newWorkDay(newWorkDate(10, 9), []*workDayItem{
+		newWorkDay(dateutil.DateFromYearMonthDay(2022, 11, 9), []*workDayItem{
 			{
 				member:           WorkMemberあんじゅ,
 				startWorkHour:    9,
@@ -95,7 +96,7 @@ var WorkSchedule2022_9to10 *anju.WorkSchedule = &anju.WorkSchedule{
 				endWorkMinutes:   40,
 			},
 		}),
-		newWorkDay(newWorkDate(10, 12), []*workDayItem{
+		newWorkDay(dateutil.DateFromYearMonthDay(2022, 11, 12), []*workDayItem{
 			{
 				member:           WorkMemberあんじゅ,
 				startWorkHour:    14,
@@ -104,7 +105,7 @@ var WorkSchedule2022_9to10 *anju.WorkSchedule = &anju.WorkSchedule{
 				endWorkMinutes:   10,
 			},
 		}),
-		newWorkDay(newWorkDate(10, 13), []*workDayItem{
+		newWorkDay(dateutil.DateFromYearMonthDay(2022, 11, 13), []*workDayItem{
 			{
 				member:           WorkMemberあんじゅ,
 				startWorkHour:    14,
@@ -113,7 +114,7 @@ var WorkSchedule2022_9to10 *anju.WorkSchedule = &anju.WorkSchedule{
 				endWorkMinutes:   0,
 			},
 		}),
-		newWorkDay(newWorkDate(10, 16), []*workDayItem{
+		newWorkDay(dateutil.DateFromYearMonthDay(2022, 11, 16), []*workDayItem{
 			{
 				member:           WorkMemberあんじゅ,
 				startWorkHour:    10,
@@ -122,7 +123,7 @@ var WorkSchedule2022_9to10 *anju.WorkSchedule = &anju.WorkSchedule{
 				endWorkMinutes:   0,
 			},
 		}),
-		newWorkDay(newWorkDate(10, 18), []*workDayItem{
+		newWorkDay(dateutil.DateFromYearMonthDay(2022, 11, 18), []*workDayItem{
 			{
 				member:           WorkMemberあんじゅ,
 				startWorkHour:    10,
@@ -131,7 +132,7 @@ var WorkSchedule2022_9to10 *anju.WorkSchedule = &anju.WorkSchedule{
 				endWorkMinutes:   0,
 			},
 		}),
-		newWorkDay(newWorkDate(10, 20), []*workDayItem{
+		newWorkDay(dateutil.DateFromYearMonthDay(2022, 11, 20), []*workDayItem{
 			{
 				member:           WorkMemberあんじゅ,
 				startWorkHour:    14,

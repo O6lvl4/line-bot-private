@@ -8,18 +8,33 @@ type WorkSchedule struct {
 	Days      []*WorkDay
 }
 
-func (w *WorkSchedule) WorkDayWithSelectDate(date time.Time) *WorkDay {
-	compareDay := func(lhs time.Time, rhs time.Time) bool {
+func (w *WorkSchedule) TimeWithSelectDate(date time.Time) *WorkDay {
+	equal_yyyyMMdd := func(lhs time.Time, rhs time.Time) bool {
 		return lhs.Year() == rhs.Year() &&
 			lhs.Month() == rhs.Month() &&
 			lhs.Day() == rhs.Day()
 	}
 	for _, workDay := range w.Days {
-		if compareDay(date, workDay.Date) {
+		if equal_yyyyMMdd(date, workDay.Date) {
 			return workDay
 		}
 	}
 	return nil
+}
+
+func (w *WorkSchedule) TimesWithSelectAfterDate(date time.Time) []*WorkDay {
+	equal_yyyyMMdd := func(lhs time.Time, rhs time.Time) bool {
+		return lhs.Year() == rhs.Year() &&
+			lhs.Month() == rhs.Month() &&
+			lhs.Day() == rhs.Day()
+	}
+	var days = make([]*WorkDay, 0)
+	for _, workDay := range w.Days {
+		if equal_yyyyMMdd(date, workDay.Date) || date.Before(workDay.Date) {
+			days = append(days, workDay)
+		}
+	}
+	return days
 }
 
 type WorkDay struct {
