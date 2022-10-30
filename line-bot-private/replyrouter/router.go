@@ -16,11 +16,11 @@ func pointerWith(v string) *string {
 
 func Routing(text string) *string {
 	today := dateutil.Today()
+	workSchedule := anjuworkdata.WorkSchedule2022_9to10
 	if text == "今の時間" {
 		timeStr := fmt.Sprint(time.Now().In(dateutil.TimeZoneJST))
 		return pointerWith(timeStr)
 	} else if text == "今日のシフト" {
-		workSchedule := anjuworkdata.WorkSchedule2022_9to10
 		todaysWorkday := workSchedule.TimeWithSelectDate(today)
 		if todaysWorkday != nil {
 			return pointerWith(messageOfTodayWorking(todaysWorkday))
@@ -34,18 +34,26 @@ func Routing(text string) *string {
 	}
 	selectDayFormatPattern := "(\\d{1,2})月(\\d{1,2})日のシフト"
 	selectDayRegex := regexp.MustCompile(selectDayFormatPattern)
-	result := selectDayRegex.Split(text, -1)
+	result := selectDayRegex.FindAllStringSubmatch(text, -1)
 	if len(result) != 0 {
-		month, err := strconv.Atoi(result[1])
+		month, err := strconv.Atoi(result[0][1])
 		if err != nil {
 			return nil
 		}
-		day, err := strconv.Atoi(result[2])
+		day, err := strconv.Atoi(result[0][2])
 		if err != nil {
 			return nil
 		}
-		selectDate := dateutil.DateFromYearMonthDay(today.Year(), month, day)
-
+		year := today.Year()
+		if month == 1 {
+			year += 1
+		}
+		selectDate := dateutil.DateFromYearMonthDay(year, month, day)
+		selectWorkDay := workSchedule.TimeWithSelectDate(selectDate)
+		if selectWorkDay == nil {
+			return pointerWith("その日はお休みのようです。")
+		}
+		return pointerWith(messageOfSelectWorkingDate(selectWorkDay))
 	}
 	return nil
 }
@@ -96,7 +104,7 @@ func messageOfSelectWorkingDate(workDay *anju.WorkDay) string {
 	item := workDay.Items[0]
 	startLabel := dateutil.Format24Hour(item.StartTime)
 	endLabel := dateutil.Format24Hour(item.EndTime)
-	contentMessage := fmt.Sprintf("本日は%s〜%sまでシフトが入っているようです。", startLabel, endLabel)
+	contentMessage := fmt.Sprintf("その日は%s〜%sまでシフトが入っているようです。", startLabel, endLabel)
 	if len(workDay.Items) >= 2 {
 		otherItems := workDay.Items[1:]
 		contentMessage += "\n\n他のメンバーのシフトはこのようになっております。"
@@ -108,6 +116,5 @@ func messageOfSelectWorkingDate(workDay *anju.WorkDay) string {
 		}
 		contentMessage += "\n以上になります。\n"
 	}
-	contentMessage += "\n本日もがんばっていきましょう"
 	return contentMessage
 }
